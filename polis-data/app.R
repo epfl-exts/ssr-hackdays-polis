@@ -11,7 +11,7 @@ get_data_from_url <- function(url) {
   resp <- httr::GET(
     url = url,
     content_type_json(), 
-    add_headers(authorization="Bearer 40iJgsMIRmnb5fX4WP4s8AVVWe6m"))
+    add_headers(authorization="Bearer YB8h2gtEWiyALlwPRgNGxQ0CnKcI"))
   content(resp)
 }
 
