@@ -1,0 +1,36 @@
+@import "./colors";
+
+.cartogram-container {
+  padding: $content-padding;
+  border-top: $poster-border;
+  border-right: $poster-border;
+  border-bottom: $poster-border;
+}
+
+.cartogram-frame {
+  padding: 7.5%;
+  background: $grey;
+}
+
+canvas {
+  width: 100%;
+}
+
+.Select {
+  margin: 0 auto;
+  width: 100%;
+  border-left: dashed 5px $power-blue;
+}
+
+.Select-placeholder {
+  top: 10px;
+}
+
+// Remember: border is only on left side
+.Select--single > .Select-control .Select-value {
+  padding-right: 20px;
+}
+
+.Select-input {
+  padding-top: 10px;
+}
