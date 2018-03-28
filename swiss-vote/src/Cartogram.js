@@ -46,7 +46,7 @@ class Cartogram extends Component {
         alpha = (no / (yes + no));
       }
     } else {
-      fill = this.colors.grey; // set default
+      fill = shape.fill; // set default
       alpha = 1; // set default
     }
 
@@ -60,6 +60,14 @@ class Cartogram extends Component {
       strokeWidth: 2
     }
   }
+
+  // drawPath() {
+  //   this.beginPath();
+  //   this.moveTo();
+  //   this.lineTo();
+  //   this.lineTo();
+  //   this.closePath();
+  // }
 
   drawRect(x, y, width, height, options) {
     this.beginPath();
@@ -75,7 +83,7 @@ class Cartogram extends Component {
     this.lineTo(points[1][0],points[1][1]);
     this.lineTo(points[2][0],points[2][1]);
     this.closePath();
-    this.fillStyle= options.fill;
+    this.fillStyle = options.fill;
     this.fill();
     this.stroke();
   }
