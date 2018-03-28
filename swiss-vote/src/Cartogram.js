@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import Rough from 'roughjs'
+import Rough from 'roughjs';
+
+import shapes from './shapes.js';
 
 class Cartogram extends Component {
   constructor(props) {
@@ -15,151 +17,6 @@ class Cartogram extends Component {
       orange: '#f67944',
       darkGrey: '#0b3536'
     }
-
-    this.shapes = [
-      {
-        code: 'sh',
-        x: 510,
-        y: 0
-      },
-      {
-        code: 'ju',
-        x: 165,
-        y: 115
-      },
-      {
-        code: 'bs',
-        type: 'polygon',
-        points: [[280, 115], [372.5, 115], [280, 207.5]]
-      },
-      {
-        code: 'bl',
-        type: 'polygon',
-        points: [[380, 122.5], [380, 215], [287.5, 215]]
-      },
-      {
-        code: 'ag',
-        x: 395,
-        y: 115
-      },
-      {
-        code: 'zh',
-        x: 510,
-        y: 115
-      },
-      {
-        code: 'tg',
-        x: 625,
-        y: 115
-      },
-      {
-        code: 'ar',
-        type: 'polygon',
-        points: [[740, 172.5], [832.5, 172.5], [740, 265]]
-      },
-      {
-        code: 'ai',
-        type: 'polygon',
-        points: [[747.5, 272.5], [840, 272.5], [840, 180]]
-      },
-      {
-        code: 'ne',
-        x: 165,
-        y: 230
-      },
-      {
-        code: 'so',
-        x: 280,
-        y: 230
-      },
-      {
-        code: 'lu',
-        x: 395,
-        y: 230
-      },
-      {
-        code: 'zg',
-        x: 510,
-        y: 230
-      },
-      {
-        code: 'sg',
-        x: 625,
-        y: 230
-      },
-      {
-        code: 'vd',
-        x: 50,
-        y: 345
-      },
-      {
-        code: 'fr',
-        x: 165,
-        y: 345
-      },
-      {
-        code: 'be',
-        x: 280,
-        y: 345
-      },
-      {
-        code: 'ow',
-        type: 'polygon',
-        points: [[395, 345], [487.5, 345], [395, 437.5]]
-      },
-      {
-        code: 'nw',
-        type: 'polygon',
-        points: [[402.5, 445], [495, 352.5], [495, 445]]
-      },
-      {
-        code: 'sz',
-        x: 510,
-        y: 345
-      },
-      {
-        code: 'gl',
-        x: 625,
-        y: 345
-      },
-      {
-        code: 'gr',
-        x: 740,
-        y: 345
-      },
-      {
-        code: 'ge',
-        x: 0,
-        y: 460
-      },
-      {
-        code: 'vs',
-        x: 222.5,
-        y: 460
-      },
-      {
-        code: 'ur',
-        x: 510,
-        y: 460
-      },
-      {
-        code: 'ti',
-        x: 510,
-        y: 575
-      },
-      {
-        code: 'leman',
-        type: 'rectangle',
-        x: 115,
-        y: 460
-      },
-      {
-        code: 'bodensee',
-        type: 'rectangle',
-        x: 625,
-        y: 50
-      }
-    ];
   }
 
   componentWillMount() {
@@ -229,8 +86,8 @@ class Cartogram extends Component {
 
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    for (let i = 0; i < this.shapes.length; i++) {
-      const shape = this.shapes[i];
+    for (let i = 0; i < shapes.length; i++) {
+      const shape = shapes[i];
       const x = shape.x;
       const y = shape.y;
       const type = shape.type;
@@ -271,7 +128,8 @@ class Cartogram extends Component {
     this.initDrawing();
 
     return (
-      <div ref={canvasContainer => this.canvasContainer=canvasContainer}></div>
+      <div ref={canvasContainer => this.canvasContainer=canvasContainer}>
+      </div>
     );
   }
 }

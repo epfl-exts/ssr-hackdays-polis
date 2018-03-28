@@ -7,8 +7,6 @@ import Cartogram from './Cartogram';
 import './css/select.css';
 import './css/App.css';
 
-import cartogram from './cartogram.svg';
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -76,7 +74,7 @@ class App extends Component {
         </div>
         <div className="cartogram-container">
           <div className="grain"></div>
-          <Cartogram canvas={this.state.canvasStyle} cartogram={cartogram} description={description} results={results} />
+          <Cartogram canvas={this.state.canvasStyle} description={description} results={results} />
         </div>
       </div>
     );
