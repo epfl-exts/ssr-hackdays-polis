@@ -1,4 +1,4 @@
-@import "./colors";
+@import "./variables";
 
 html, body {
   margin:0px;
@@ -6,7 +6,6 @@ html, body {
 }
 
 body {
-  background: #e0e5db;
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 18px;
   line-height: 1.2;
@@ -15,6 +14,33 @@ body {
 a {
   color: $light-green;
   text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.object-link {
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+}
+
+.is-green {
+  color: $green;
+}
+
+.is-red {
+  color: #db2f27;
+}
+
+.is-hi-lite {
+  background-color: $gold;
 }
 
 .dashed-border-right {
@@ -36,9 +62,17 @@ a {
 .content-container {
   box-sizing: border-box;
   margin: 0 auto;
-  padding: $content-padding;
   max-width: $content-width;
   position: relative;
+  padding: 0 15px;
+}
+
+.content {
+  padding: $content-padding;
+
+  p {
+    max-width: $content-max-width;
+  }
 }
 
 .grain {
@@ -54,33 +88,41 @@ a {
   pointer-events: none;
 }
 
-.header-container {
-  background-color: $orange;
+.header-container, .footer-container {
   box-sizing: border-box;
   width: 100%;
-  box-shadow: 0 1px 4px 2px rgba(0,0,0,.2);
 }
 
-.header {
+.header-container {
+  background-color: $orange;
+  padding-top: 30px;
+}
+
+.footer-container {
+  background-color: $grey;
+  padding-bottom: 30px;
+}
+
+.header, .footer {
   box-sizing: border-box;
   width: 100%;
   max-width: $content-width;
   margin: 0 auto;
-  padding: 50px 20px 20px;
+  padding: 15px;
+}
 
+.header {
   h1, h4 {
     margin: 0;
   }
 }
 
-.poster-container {
-  padding-bottom: 2.5%;
-}
+.footer {
+  position: relative;
 
-.poster {
-  background: $off-white;
-  box-shadow: 0 1px 4px 2px rgba(0,0,0,.2);
-  padding-bottom: 30px;
+  h4 {
+    max-width: $content-max-width;
+  }
 }
 
 .brand {

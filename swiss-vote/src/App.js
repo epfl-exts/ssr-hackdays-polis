@@ -14,6 +14,7 @@ class App extends Component {
     super(props);
 
     this.state = {
+      canvasStyle: null, // or 'rough'
       selectedOption: ''
     };
 
@@ -42,6 +43,12 @@ class App extends Component {
     this.allResults = allResults;
   }
 
+  setStyle(event) {
+    this.setState({
+      canvasStyle: event.target.value
+    });
+  }
+
   handleChange = (selectedOption) => {
     this.setState(
       { selectedOption }
@@ -56,19 +63,20 @@ class App extends Component {
     const results = this.allResults[this.state.selectedOption.value];
 
     return (
-      <div className="App">
-        <Select
-          name="form-field-name"
-          value={value}
-          onChange={this.handleChange}
-          options={this.resultDescriptions}
-          placeholder="Search here for a vote."
-          clearable={false}
-        />
+      <div>
+        <div className="filter">
+          <Select
+            name="vote-select"
+            value={value}
+            onChange={this.handleChange}
+            options={this.resultDescriptions}
+            placeholder="Click here."
+            clearable={false}
+          />
+        </div>
         <div className="cartogram-container">
-          <div className="cartogram-frame">
-            <Cartogram cartogram={cartogram} description={description} results={results} />
-          </div>
+          <div className="grain"></div>
+          <Cartogram canvas={this.state.canvasStyle} cartogram={cartogram} description={description} results={results} />
         </div>
       </div>
     );

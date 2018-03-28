@@ -3,7 +3,6 @@ html, body {
   padding: 0px; }
 
 body {
-  background: #e0e5db;
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 18px;
   line-height: 1.2; }
@@ -11,6 +10,25 @@ body {
 a {
   color: #3dbd5d;
   text-decoration: none; }
+  a:hover {
+    text-decoration: underline; }
+
+.object-link:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0; }
+
+.is-green {
+  color: #007500; }
+
+.is-red {
+  color: #db2f27; }
+
+.is-hi-lite {
+  background-color: #f0c24f; }
 
 .dashed-border-right {
   border-right: dashed 5px #0098d8; }
@@ -27,9 +45,14 @@ a {
 .content-container {
   box-sizing: border-box;
   margin: 0 auto;
-  padding: 20px;
   max-width: 800px;
-  position: relative; }
+  position: relative;
+  padding: 0 15px; }
+
+.content {
+  padding: 20px; }
+  .content p {
+    max-width: 600px; }
 
 .grain {
   background-image: url("../noise.jpg");
@@ -43,28 +66,32 @@ a {
   opacity: 0.1;
   pointer-events: none; }
 
+.header-container, .footer-container {
+  box-sizing: border-box;
+  width: 100%; }
+
 .header-container {
   background-color: #f67944;
-  box-sizing: border-box;
-  width: 100%;
-  box-shadow: 0 1px 4px 2px rgba(0, 0, 0, 0.2); }
+  padding-top: 30px; }
 
-.header {
+.footer-container {
+  background-color: #dddddd;
+  padding-bottom: 30px; }
+
+.header, .footer {
   box-sizing: border-box;
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
-  padding: 50px 20px 20px; }
-  .header h1, .header h4 {
-    margin: 0; }
+  padding: 15px; }
 
-.poster-container {
-  padding-bottom: 2.5%; }
+.header h1, .header h4 {
+  margin: 0; }
 
-.poster {
-  background: #fbfbfb;
-  box-shadow: 0 1px 4px 2px rgba(0, 0, 0, 0.2);
-  padding-bottom: 30px; }
+.footer {
+  position: relative; }
+  .footer h4 {
+    max-width: 600px; }
 
 .brand {
   color: #fbfbfb; }
