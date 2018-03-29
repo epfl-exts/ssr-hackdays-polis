@@ -15,7 +15,7 @@ fieldset {
 
 legend {
   font-weight: bold;
-  margin: 1em 0 0;
+  margin: 0;
   padding: 0;
 }
 
@@ -30,8 +30,8 @@ legend {
 }
 
 .filter {
-    background: $blue;
-    margin-bottom: 20px;
+  background: $blue;
+  margin-bottom: 20px;
 }
 
 .is-open {

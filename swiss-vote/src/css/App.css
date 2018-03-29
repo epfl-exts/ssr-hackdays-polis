@@ -9,7 +9,7 @@ fieldset {
 
 legend {
   font-weight: bold;
-  margin: 1em 0 0;
+  margin: 0;
   padding: 0; }
 
 .option-group label {

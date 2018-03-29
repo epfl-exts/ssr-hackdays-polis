@@ -50,9 +50,11 @@ class App extends Component {
     });
   }
 
-  handleCheckbox(event) {
+  handleCheckbox(changeEvent) {
+    const checked = changeEvent.target.checked;
+
     this.setState({
-      rough: this.refs.rough.value
+      rough: checked
     });
   }
 
@@ -71,6 +73,16 @@ class App extends Component {
 
     return (
       <div>
+        <div className="filter">
+          <Select
+            name="vote-select"
+            value={value}
+            onChange={this.handleChange}
+            options={this.resultDescriptions}
+            placeholder="Click here."
+            clearable={false}
+          />
+        </div>
         <div>
           <fieldset>
             <legend>Options</legend>
@@ -93,26 +105,14 @@ class App extends Component {
                 />
               </label>
             </div>
-            <div className="option-group">
+            <div className="option-group" onChange={this.handleCheckbox.bind(this)}>
               <label>Rough</label>
               <input
+                value={true}
                 type="checkbox"
-                defaultChecked={this.state.canvasStyle}
-                ref="rough"
-                onChange={this.handleCheckbox.bind(this)}
               />
             </div>
           </fieldset>
-        </div>
-        <div className="filter">
-          <Select
-            name="vote-select"
-            value={value}
-            onChange={this.handleChange}
-            options={this.resultDescriptions}
-            placeholder="Click here."
-            clearable={false}
-          />
         </div>
         <div className="cartogram-container">
           <div className="grain"></div>
