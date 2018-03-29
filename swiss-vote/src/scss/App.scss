@@ -9,6 +9,26 @@
   }
 }
 
+fieldset {
+  border: none;
+}
+
+legend {
+  font-weight: bold;
+  margin: 1em 0 0;
+  padding: 0;
+}
+
+.option-group {
+  label {
+    margin: 1em 0;
+  }
+
+  input {
+    margin: 1em;
+  }
+}
+
 .filter {
     background: $blue;
     margin-bottom: 20px;

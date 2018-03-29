@@ -61,17 +61,17 @@ class Cartogram extends Component {
     }
   }
 
-  // drawPath() {
-  //   this.beginPath();
-  //   this.moveTo();
-  //   this.lineTo();
-  //   this.lineTo();
-  //   this.closePath();
-  // }
+  drawPath(d, options) {
+    const path = new Path2D(d);
+
+    this.fillStyle = options.fill;
+    this.fill(path);
+    this.stroke(path);
+  }
 
   drawRect(x, y, width, height, options) {
     this.beginPath();
-    this.fillStyle= options.fill;
+    this.fillStyle = options.fill;
     this.rect(x, y, width, height);
     this.fill();
     this.stroke();
@@ -100,33 +100,39 @@ class Cartogram extends Component {
       const y = shape.y;
       const type = shape.type;
       const points = shape.points;
+      const path = shape.path;
       const width = 100;
       const options = this.getOptions(shape);
 
       let drawRect;
       let drawPoly;
+      let drawPath;
 
       ctx.globalAlpha = options.alpha; // set this here for both rough and regular
 
-      switch (this.props.canvas) {
-        case 'rough':
-          drawRect = rc.rectangle.bind(rc);
-          drawPoly = rc.polygon.bind(rc);
-        break;
-        default:
-          drawRect = this.drawRect.bind(ctx);
-          drawPoly = this.drawPoly.bind(ctx);
+      if (this.props.rough) {
+        drawRect = rc.rectangle.bind(rc);
+        drawPoly = rc.polygon.bind(rc);
+        drawPath = rc.path.bind(rc);
+      } else {
+        drawRect = this.drawRect.bind(ctx);
+        drawPoly = this.drawPoly.bind(ctx);
+        drawPath = this.drawPath.bind(ctx);
       }
 
-      switch (type) {
-        case 'polygon':
-          drawPoly(points, options);
-          break;
-        case 'rectangle':
-          drawRect(x, y, width, 50, { alpha: 1, fill: this.colors.blue, stroke: null, strokeWidth: null });
-          break;
-        default:
-          drawRect(x, y, width, 100, options);
+      if (!this.props.map) {
+        switch (type) {
+          case 'polygon':
+            drawPoly(points, options);
+            break;
+          case 'rectangle':
+            drawRect(x, y, width, 50, { alpha: 1, fill: this.colors.blue, stroke: null, strokeWidth: null });
+            break;
+          default:
+            drawRect(x, y, width, 100, options);
+        }
+      } else {
+        drawPath(path, options);
       }
     }
   }
@@ -136,8 +142,7 @@ class Cartogram extends Component {
     this.initDrawing();
 
     return (
-      <div ref={canvasContainer => this.canvasContainer=canvasContainer}>
-      </div>
+      <div ref={canvasContainer => this.canvasContainer=canvasContainer}></div>
     );
   }
 }

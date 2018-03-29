@@ -4,6 +4,20 @@
   .cartogram-container canvas {
     width: 100%; }
 
+fieldset {
+  border: none; }
+
+legend {
+  font-weight: bold;
+  margin: 1em 0 0;
+  padding: 0; }
+
+.option-group label {
+  margin: 1em 0; }
+
+.option-group input {
+  margin: 1em; }
+
 .filter {
   background: #2677bb;
   margin-bottom: 20px; }

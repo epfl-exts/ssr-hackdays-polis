@@ -12,7 +12,8 @@ class App extends Component {
     super(props);
 
     this.state = {
-      canvasStyle: null, // or 'rough'
+      map: false,
+      rough: false,
       selectedOption: ''
     };
 
@@ -41,9 +42,17 @@ class App extends Component {
     this.allResults = allResults;
   }
 
-  setStyle(event) {
+  handleOptionChange(changeEvent) {
+    const value = (changeEvent.target.value === 'true');
+
     this.setState({
-      canvasStyle: event.target.value
+      map: value
+    });
+  }
+
+  handleCheckbox(event) {
+    this.setState({
+      rough: this.refs.rough.value
     });
   }
 
@@ -62,6 +71,39 @@ class App extends Component {
 
     return (
       <div>
+        <div>
+          <fieldset>
+            <legend>Options</legend>
+            <div className="option-group" onChange={this.handleOptionChange.bind(this)}>
+              <label>
+                Cartogram
+                <input
+                  name="map"
+                  type="radio"
+                  value={false}
+                  defaultChecked
+                />
+              </label>
+              <label>
+                Map
+                <input
+                  name="map"
+                  type="radio"
+                  value={true}
+                />
+              </label>
+            </div>
+            <div className="option-group">
+              <label>Rough</label>
+              <input
+                type="checkbox"
+                defaultChecked={this.state.canvasStyle}
+                ref="rough"
+                onChange={this.handleCheckbox.bind(this)}
+              />
+            </div>
+          </fieldset>
+        </div>
         <div className="filter">
           <Select
             name="vote-select"
@@ -74,7 +116,7 @@ class App extends Component {
         </div>
         <div className="cartogram-container">
           <div className="grain"></div>
-          <Cartogram canvas={this.state.canvasStyle} description={description} results={results} />
+          <Cartogram map={this.state.map} rough={this.state.rough} description={description} results={results} />
         </div>
       </div>
     );
