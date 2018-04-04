@@ -12,7 +12,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      map: false,
+      map: true,
       rough: false,
       selectedOption: ''
     };
@@ -50,14 +50,6 @@ class App extends Component {
     });
   }
 
-  handleCheckbox(changeEvent) {
-    const checked = changeEvent.target.checked;
-
-    this.setState({
-      rough: checked
-    });
-  }
-
   handleChange = (selectedOption) => {
     this.setState(
       { selectedOption }
@@ -88,35 +80,28 @@ class App extends Component {
             <legend>Options</legend>
             <div className="option-group" onChange={this.handleOptionChange.bind(this)}>
               <label>
-                Cartogram
-                <input
-                  name="map"
-                  type="radio"
-                  value={false}
-                  defaultChecked
-                />
-              </label>
-              <label>
                 Map
                 <input
                   name="map"
                   type="radio"
                   value={true}
+                  defaultChecked
                 />
               </label>
-            </div>
-            <div className="option-group" onChange={this.handleCheckbox.bind(this)}>
-              <label>Rough</label>
-              <input
-                value={true}
-                type="checkbox"
-              />
+              <label>
+                Cartogram
+                <input
+                  name="map"
+                  type="radio"
+                  value={false}
+                />
+              </label>
             </div>
           </fieldset>
         </div>
         <div className="cartogram-container">
           <div className="grain"></div>
-          <Cartogram map={this.state.map} rough={this.state.rough} description={description} results={results} />
+          <Cartogram map={this.state.map} description={description} results={results} />
         </div>
       </div>
     );

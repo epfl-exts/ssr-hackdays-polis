@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Rough from 'roughjs';
 
 import shapes from './shapes.js';
 
@@ -52,10 +51,7 @@ class Cartogram extends Component {
 
     return {
       alpha: alpha,
-      bowing: 7,
-      roughness: .5,
       fill: fill,
-      fillStyle: 'solid',
       stroke: this.colors.darkGrey,
       strokeWidth: 2
     }
@@ -90,7 +86,6 @@ class Cartogram extends Component {
 
   initDrawing() {
     const ctx = this.canvas.getContext('2d');
-    const rc = Rough.canvas(this.canvas);
 
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -104,21 +99,11 @@ class Cartogram extends Component {
       const width = 100;
       const options = this.getOptions(shape);
 
-      let drawRect;
-      let drawPoly;
-      let drawPath;
+      let drawRect = this.drawRect.bind(ctx);
+      let drawPoly = this.drawPoly.bind(ctx);
+      let drawPath = this.drawPath.bind(ctx);
 
-      ctx.globalAlpha = options.alpha; // set this here for both rough and regular
-
-      if (this.props.rough) {
-        drawRect = rc.rectangle.bind(rc);
-        drawPoly = rc.polygon.bind(rc);
-        drawPath = rc.path.bind(rc);
-      } else {
-        drawRect = this.drawRect.bind(ctx);
-        drawPoly = this.drawPoly.bind(ctx);
-        drawPath = this.drawPath.bind(ctx);
-      }
+      ctx.globalAlpha = options.alpha; // this was originally here to set for both rough an regular. Maybe now it should be moved
 
       if (!this.props.map) {
         switch (type) {
