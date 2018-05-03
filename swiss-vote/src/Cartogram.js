@@ -6,8 +6,6 @@ class Cartogram extends Component {
   constructor(props) {
     super(props);
 
-    this.results = null;
-
     this.colors = {
       blue: '#2677bb',
       green: '#007500',
@@ -16,24 +14,43 @@ class Cartogram extends Component {
       orange: '#f67944',
       darkGrey: '#0b3536'
     }
-  }
 
-  componentWillMount() {
     this.canvas = document.createElement('canvas');
     this.canvas.width  = 840;
     this.canvas.height = 675;
+
+    this.state = {
+      results: null
+    };    
+  }
+
+  componentWillMount() {
+    this.initDrawing();
   }
 
   componentDidMount() {
     this.canvasContainer.appendChild(this.canvas);
   }
 
-  getOptions(shape) {
+  componentWillReceiveProps(nextProps) {
+    if (this.props.results !== nextProps.results) {
+      this.setState({
+        results: nextProps.results
+      });
+    }
+  }
+
+  componentDidUpdate() {
+    this.initDrawing();
+  }
+
+  getStyle(shape) {
     let alpha;
     let fill;
 
-    if (this.results && this.results.find(x => x.canton === shape.code.toUpperCase())) {
-      const result = this.results.find(x => x.canton === shape.code.toUpperCase());
+    // Check yes and no results
+    if (this.state.results && this.state.results.find(x => x.canton === shape.code.toUpperCase())) {
+      const result = this.state.results.find(x => x.canton === shape.code.toUpperCase());
       const yes = result.yes;
       const no = result.no;
 
@@ -84,48 +101,57 @@ class Cartogram extends Component {
     this.stroke();
   }
 
+  drawLabel(code, x , y, width, color) {
+    this.font = '24px Helvetica';
+    this.textAlign = 'center'; 
+    this.textBaseline = 'middle';
+    this.fillStyle = color;
+    this.globalAlpha = 1;
+    this.fillText(code, (x + (width / 2)), (y + (width / 2)));
+  }
+
   initDrawing() {
     const ctx = this.canvas.getContext('2d');
 
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     for (let i = 0; i < shapes.length; i++) {
-      const shape = shapes[i];
-      const x = shape.x;
-      const y = shape.y;
-      const type = shape.type;
-      const points = shape.points;
-      const path = shape.path;
-      const width = 100;
-      const options = this.getOptions(shape);
+      const shape = shapes[i],
+            x = shape.x,
+            y = shape.y,
+            type = shape.type,
+            points = shape.points,
+            path = shape.path,
+            width = 100,
+            style = this.getStyle(shape);
 
-      let drawRect = this.drawRect.bind(ctx);
-      let drawPoly = this.drawPoly.bind(ctx);
-      let drawPath = this.drawPath.bind(ctx);
+      let drawRect = this.drawRect.bind(ctx),
+          drawPoly = this.drawPoly.bind(ctx),
+          drawPath = this.drawPath.bind(ctx),
+          drawLabel = this.drawLabel.bind(ctx);
 
-      ctx.globalAlpha = options.alpha; // this was originally here to set for both rough an regular. Maybe now it should be moved
+      ctx.globalAlpha = style.alpha; // this was originally here to set for both rough an regular. Maybe now it should be moved
 
       if (!this.props.map) {
         switch (type) {
           case 'polygon':
-            drawPoly(points, options);
+            drawPoly(points, style);
             break;
           case 'rectangle':
             drawRect(x, y, width, 50, { alpha: 1, fill: this.colors.blue, stroke: null, strokeWidth: null });
             break;
           default:
-            drawRect(x, y, width, 100, options);
+            drawRect(x, y, width, 100, style);
         }
+
+        drawLabel(shape.code, x, y, width, this.colors.darkGrey);
       } else {
-        drawPath(path, options);
+        drawPath(path, style);
       }
     }
   }
 
   render() {
-    this.results = this.props.results ? this.props.results : null;
-    this.initDrawing();
-
     return (
       <div ref={canvasContainer => this.canvasContainer=canvasContainer}></div>
     );

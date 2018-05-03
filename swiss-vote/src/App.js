@@ -14,18 +14,13 @@ class App extends Component {
     this.state = {
       map: true,
       rough: false,
-      selectedOption: ''
+      selectedOption: '',
+      resultDescriptions: [],
+      allResults: []
     };
-
-    this.resultDescriptions = [];
-    this.allResults = [];
   }
 
-  componentWillMount() {
-    this.processData();
-  }
-
-  processData() {
+  componentDidMount() {
     let resultDescriptions = [];
     let allResults = [];
 
@@ -38,8 +33,10 @@ class App extends Component {
       allResults.push(data[i].results);
     }
 
-    this.resultDescriptions = resultDescriptions;
-    this.allResults = allResults;
+    this.setState({
+      resultDescriptions: resultDescriptions,
+      allResults: allResults
+    });
   }
 
   handleOptionChange(changeEvent) {
@@ -57,11 +54,10 @@ class App extends Component {
   }
 
   render() {
-    const { selectedOption } = this.state;
-    const value = selectedOption && selectedOption.value;
-
-    const description = this.state.selectedOption.label;
-    const results = this.allResults[this.state.selectedOption.value];
+    const { selectedOption } = this.state,
+          value = selectedOption && selectedOption.value,
+          description = this.state.selectedOption.label,
+          results = this.state.allResults[this.state.selectedOption.value];
 
     return (
       <div>
@@ -70,7 +66,7 @@ class App extends Component {
             name="vote-select"
             value={value}
             onChange={this.handleChange}
-            options={this.resultDescriptions}
+            options={this.state.resultDescriptions}
             placeholder="Click here."
             clearable={false}
           />
@@ -99,10 +95,11 @@ class App extends Component {
             </div>
           </fieldset>
         </div>
-        <div className="cartogram-container">
+        <figure className="cartogram-container">
           <div className="grain"></div>
           <Cartogram map={this.state.map} description={description} results={results} />
-        </div>
+          <figcaption className="sr-only">{description}</figcaption>
+        </figure>
       </div>
     );
   }
