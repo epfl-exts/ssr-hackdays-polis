@@ -1,12 +1,24 @@
 @import "./variables";
 
 .cartogram-container {
-  margin: 0;
   padding: 7.5%;
   position: relative;
 
   canvas {
     width: 100%;
+  }
+
+  figure {
+    margin: 0 0 25px;
+
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+
+  h4 {
+    color: #0b3536;
+    text-align: center;
   }
 }
 

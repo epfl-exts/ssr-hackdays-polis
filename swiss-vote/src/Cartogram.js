@@ -21,7 +21,7 @@ class Cartogram extends Component {
 
     this.state = {
       results: null
-    };    
+    };
   }
 
   componentWillMount() {

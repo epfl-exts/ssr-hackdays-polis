@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 
 import data from './results.json';
 import Select from 'react-select';
+import Gradient from './Gradient';
 import Cartogram from './Cartogram';
+import CanvasChart from './CanvasChart';
 
 import './css/select.css';
 import './css/App.css';
@@ -12,7 +14,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      map: true,
+      isMap: true,
       rough: false,
       selectedOption: '',
       resultDescriptions: [],
@@ -43,7 +45,7 @@ class App extends Component {
     const value = (changeEvent.target.value === 'true');
 
     this.setState({
-      map: value
+      isMap: value
     });
   }
 
@@ -95,11 +97,22 @@ class App extends Component {
             </div>
           </fieldset>
         </div>
-        <figure className="cartogram-container">
+        <div className="cartogram-container">
           <div className="grain"></div>
-          <Cartogram map={this.state.map} description={description} results={results} />
-          <figcaption className="sr-only">{description}</figcaption>
-        </figure>
+          <h4>Strength of yes and no votes by canton</h4>
+          <figure>
+            <Cartogram map={this.state.isMap} description={description} results={results} />
+            <figcaption className="sr-only">Cartogram: {description}</figcaption>
+          </figure>
+          <figure>
+            <Gradient />
+            <figcaption className="sr-only">Legend for color-gradient</figcaption>
+          </figure>
+          <figure>
+            <CanvasChart results={results} />
+            <figcaption className="sr-only">Chart: {description}</figcaption>
+          </figure>
+        </div>    
       </div>
     );
   }

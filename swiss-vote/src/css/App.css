@@ -1,9 +1,15 @@
 .cartogram-container {
-  margin: 0;
   padding: 7.5%;
   position: relative; }
   .cartogram-container canvas {
     width: 100%; }
+  .cartogram-container figure {
+    margin: 0 0 25px; }
+    .cartogram-container figure:last-of-type {
+      margin-bottom: 0; }
+  .cartogram-container h4 {
+    color: #0b3536;
+    text-align: center; }
 
 fieldset {
   border: none; }
