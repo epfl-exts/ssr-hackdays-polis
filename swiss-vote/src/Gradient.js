@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import shapes from './shapes.js';
-
 class Cartogram extends Component {
     constructor(props) {
         super(props);

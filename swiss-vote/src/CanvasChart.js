@@ -56,7 +56,7 @@ class CanvasChart extends Component {
             }
             
             return (
-            (order == 'desc') ? (comparison * -1) : comparison
+            (order === 'desc') ? (comparison * -1) : comparison
             );
         };
     }
