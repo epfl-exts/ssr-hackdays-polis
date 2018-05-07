@@ -15,9 +15,11 @@ class Cartogram extends Component {
       darkGrey: '#0b3536'
     }
 
+    this.mapHeight = 538;
+    this.cartogramHeight = 675;
+
     this.canvas = document.createElement('canvas');
-    this.canvas.width  = 840;
-    this.canvas.height = 675;
+    this.canvas.width = 840;
 
     this.state = {
       results: null
@@ -92,68 +94,84 @@ class Cartogram extends Component {
 
   drawPoly(points, options) {
     this.beginPath();
-    this.moveTo(points[0][0],points[0][1]);
-    this.lineTo(points[1][0],points[1][1]);
-    this.lineTo(points[2][0],points[2][1]);
+    this.moveTo(points[0][0], points[0][1]);
+    this.lineTo(points[1][0], points[1][1]);
+    this.lineTo(points[2][0], points[2][1]);
     this.closePath();
     this.fillStyle = options.fill;
     this.fill();
     this.stroke();
   }
 
-  drawLabel(code, x , y, width, color) {
+  drawLabel(code, x, y, width, color) {
     this.font = '24px Helvetica';
-    this.textAlign = 'center'; 
+    this.textAlign = 'center';
     this.textBaseline = 'middle';
     this.fillStyle = color;
     this.globalAlpha = 1;
     this.fillText(code, (x + (width / 2)), (y + (width / 2)));
   }
 
+  drawShape(ctx,i) {
+    const shape = shapes[i],
+      x = shape.x,
+      y = shape.y,
+      type = shape.type,
+      points = shape.points,
+      path = shape.path,
+      width = 100,
+      style = this.getStyle(shape);
+
+    let drawRect = this.drawRect.bind(ctx),
+      drawPoly = this.drawPoly.bind(ctx),
+      drawPath = this.drawPath.bind(ctx),
+      drawLabel = this.drawLabel.bind(ctx);
+
+    ctx.globalAlpha = style.alpha; // this was originally here to set for both rough an regular. Maybe now it should be moved
+
+    if (!this.props.map) {
+      switch (type) {
+        case 'polygon':
+          drawPoly(points, style);
+          break;
+        case 'rectangle':
+          drawRect(x, y, width, 50, { alpha: 1, fill: this.colors.blue, stroke: null, strokeWidth: null });
+          break;
+        default:
+          drawRect(x, y, width, 100, style);
+      }
+
+      drawLabel(shape.code, x, y, width, this.colors.darkGrey);
+    } else {
+      drawPath(path, style);
+    }
+  }
+
   initDrawing() {
-    const ctx = this.canvas.getContext('2d');
+    const ctx = this.canvas.getContext('2d'),
+          mapTopOffset = (this.cartogramHeight - this.mapHeight) / 2;
+
+    if (!this.props.map) {
+      this.canvas.height = this.cartogramHeight;
+    } else {
+      this.canvas.height = this.mapHeight;
+      ctx.translate(0, - mapTopOffset);
+    }
 
     ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
     for (let i = 0; i < shapes.length; i++) {
-      const shape = shapes[i],
-            x = shape.x,
-            y = shape.y,
-            type = shape.type,
-            points = shape.points,
-            path = shape.path,
-            width = 100,
-            style = this.getStyle(shape);
+      this.drawShape(ctx,i);
+    }
 
-      let drawRect = this.drawRect.bind(ctx),
-          drawPoly = this.drawPoly.bind(ctx),
-          drawPath = this.drawPath.bind(ctx),
-          drawLabel = this.drawLabel.bind(ctx);
-
-      ctx.globalAlpha = style.alpha; // this was originally here to set for both rough an regular. Maybe now it should be moved
-
-      if (!this.props.map) {
-        switch (type) {
-          case 'polygon':
-            drawPoly(points, style);
-            break;
-          case 'rectangle':
-            drawRect(x, y, width, 50, { alpha: 1, fill: this.colors.blue, stroke: null, strokeWidth: null });
-            break;
-          default:
-            drawRect(x, y, width, 100, style);
-        }
-
-        drawLabel(shape.code, x, y, width, this.colors.darkGrey);
-      } else {
-        drawPath(path, style);
-      }
+    if (this.props.map) {
+      ctx.translate(0, mapTopOffset);
     }
   }
 
   render() {
     return (
-      <div ref={canvasContainer => this.canvasContainer=canvasContainer}></div>
+      <div ref={canvasContainer => this.canvasContainer = canvasContainer}></div>
     );
   }
 }

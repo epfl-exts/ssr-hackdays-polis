@@ -8,7 +8,8 @@ class Cartogram extends Component {
             green: '#007500',
             grey: '#a5a6a9',
             red: '#db2f27',
-            darkGrey: '#0b3536'
+            darkGrey: '#0b3536',
+            white: '#ffffff'
         }
 
         this.canvas = document.createElement('canvas');
@@ -26,8 +27,8 @@ class Cartogram extends Component {
         ctx.fillText('Strong no', 840, 26);
         
         gradient.addColorStop(0, this.colors.green);
-        gradient.addColorStop(.25, '#ffffff');
-        gradient.addColorStop(.75, '#ffffff');
+        gradient.addColorStop(.25, this.colors.white);
+        gradient.addColorStop(.75, this.colors.white);
         gradient.addColorStop(1, this.colors.red);
         
         ctx.fillStyle = gradient;
