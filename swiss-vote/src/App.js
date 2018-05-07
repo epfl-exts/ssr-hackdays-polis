@@ -56,7 +56,7 @@ class App extends Component {
   }
 
   render() {
-    const { selectedOption } = this.state ? this.state : '',
+    const { selectedOption } = this.state,
           value = selectedOption && selectedOption.value,
           description = this.state.selectedOption.label,
           results = this.state.allResults[this.state.selectedOption.value];
