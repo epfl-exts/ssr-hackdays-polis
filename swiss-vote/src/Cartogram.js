@@ -3,35 +3,8 @@ import React, { Component } from 'react';
 import shapes from './shapes.js';
 
 class Cartogram extends Component {
-  constructor(props) {
-    super(props);
-
-    this.colors = {
-      blue: '#2677bb',
-      green: '#007500',
-      grey: '#a5a6a9',
-      red: '#db2f27',
-      orange: '#f67944',
-      darkGrey: '#0b3536'
-    }
-
-    this.mapHeight = 538;
-    this.cartogramHeight = 675;
-
-    this.canvas = document.createElement('canvas');
-    this.canvas.width = 840;
-
-    this.state = {
-      results: null
-    };
-  }
-
-  componentWillMount() {
-    this.initDrawing();
-  }
-
   componentDidMount() {
-    this.canvasContainer.appendChild(this.canvas);
+    this.initDrawing();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -51,16 +24,20 @@ class Cartogram extends Component {
     let fill;
 
     // Check yes and no results
-    if (this.state.results && this.state.results.find(x => x.canton === shape.code.toUpperCase())) {
-      const result = this.state.results.find(x => x.canton === shape.code.toUpperCase());
+    const selection = this.props.selection;
+
+    if (selection && selection.results.find(x => x.canton === shape.code.toUpperCase())) {
+      const results = selection.results;
+
+      const result = results.find(x => x.canton === shape.code.toUpperCase());
       const yes = result.yes;
       const no = result.no;
 
       if (yes > no) {
-        fill = this.colors.green;
+        fill = this.props.colors.green;
         alpha = (yes / (yes + no));
       } else {
-        fill = this.colors.red;
+        fill = this.props.colors.red;
         alpha = (no / (yes + no));
       }
     } else {
@@ -71,7 +48,7 @@ class Cartogram extends Component {
     return {
       alpha: alpha,
       fill: fill,
-      stroke: this.colors.darkGrey,
+      stroke: this.props.colors.darkGrey,
       strokeWidth: 2
     }
   }
@@ -112,7 +89,7 @@ class Cartogram extends Component {
     this.fillText(code, (x + (width / 2)), (y + (width / 2)));
   }
 
-  drawShape(ctx,i) {
+  drawShape(ctx, i) {
     const shape = shapes[i],
       x = shape.x,
       y = shape.y,
@@ -135,13 +112,13 @@ class Cartogram extends Component {
           drawPoly(points, style);
           break;
         case 'rectangle':
-          drawRect(x, y, width, 50, { alpha: 1, fill: this.colors.blue, stroke: null, strokeWidth: null });
+          drawRect(x, y, width, 50, { alpha: 1, fill: this.props.colors.blue, stroke: null, strokeWidth: null });
           break;
         default:
           drawRect(x, y, width, 100, style);
       }
 
-      drawLabel(shape.code, x, y, width, this.colors.darkGrey);
+      drawLabel(shape.code, x, y, width, this.props.colors.darkGrey);
     } else {
       drawPath(path, style);
     }
@@ -149,19 +126,16 @@ class Cartogram extends Component {
 
   initDrawing() {
     const ctx = this.canvas.getContext('2d'),
-          mapTopOffset = (this.cartogramHeight - this.mapHeight) / 2;
+      mapTopOffset = (this.props.cartogramHeight - this.props.cartogramHeight) / 2;
 
-    if (!this.props.map) {
-      this.canvas.height = this.cartogramHeight;
-    } else {
-      this.canvas.height = this.mapHeight;
+    if (this.props.map) {
       ctx.translate(0, - mapTopOffset);
     }
 
-    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    ctx.clearRect(0, 0, this.props.width, this.props.height);
 
     for (let i = 0; i < shapes.length; i++) {
-      this.drawShape(ctx,i);
+      this.drawShape(ctx, i);
     }
 
     if (this.props.map) {
@@ -170,9 +144,7 @@ class Cartogram extends Component {
   }
 
   render() {
-    return (
-      <div ref={canvasContainer => this.canvasContainer = canvasContainer}></div>
-    );
+    return <canvas ref={canvas => this.canvas = canvas} width={this.props.width} height={this.props.height}></canvas>
   }
 }
 

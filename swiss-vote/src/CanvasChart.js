@@ -161,7 +161,16 @@ class CanvasChart extends Component {
 
     render() {
         return (
+        <React.Fragment>
+            <figure>
+            <Gradient />
+            <figcaption className="sr-only">Legend for color-gradient</figcaption>
+            </figure>
+            <figure>
             <div ref={canvasContainer => this.canvasContainer = canvasContainer}></div>
+            <figcaption className="sr-only">Chart: {description}</figcaption>
+            </figure>
+        </React.Fragment>
         );
     }
 }
