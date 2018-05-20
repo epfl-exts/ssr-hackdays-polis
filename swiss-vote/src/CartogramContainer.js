@@ -4,47 +4,56 @@ import { Consumer } from './context-app';
 import Cartogram from './Cartogram';
 
 class CartogramContainer extends Component {
+    constructor(props) {
+        super(props);
+        this.handleDisplayChange = this.handleDisplayChange.bind(this);
+    }
+
+    handleDisplayChange(e) {
+        this.props.onDisplayChange(e.target.value);
+    }
+
     render() {
         const cartogramHeight = 675;
         const cartogramWidth = 840;
 
         return (
             <React.Fragment>
-                {/* <fieldset>
+                <fieldset>
                     <legend>Options</legend>
-                    <div className="option-group" onChange={this.handleOptionChange.bind(this)}>
+                    <div className="option-group" onChange={this.handleDisplayChange}>
                         <label>
                             Map
                             <input
-                                name="map"
+                                name="display"
                                 type="radio"
-                                value={true}
+                                value="map"
                                 defaultChecked
                             />
                         </label>
                         <label>
                             Cartogram
                             <input
-                                name="map"
+                                name="display"
                                 type="radio"
-                                value={false}
+                                value="cartogram"
                             />
                         </label>
                     </div>
-                </fieldset> */}
+                </fieldset>
                 <figure>
                     <Consumer>
-                        { selection => (
-                            <Cartogram selection={selection} height={cartogramHeight} width={cartogramWidth} colors={{
-                                blue: '#2677bb',
-                                green: '#007500',
-                                grey: '#a5a6a9',
-                                red: '#db2f27',
-                                orange: '#f67944',
-                                darkGrey: '#0b3536'
-                            }} />
+                        {appState => (
+                            <Cartogram
+                                display={appState.display}
+                                selection={appState.selection}
+                                height={cartogramHeight}
+                                width={cartogramWidth}
+                                colors={appState.colors}
+                            />
                         )}
                     </Consumer>
+                    <figcaption className="sr-only">Cartogram</figcaption>
                 </figure>
             </React.Fragment>
         );
