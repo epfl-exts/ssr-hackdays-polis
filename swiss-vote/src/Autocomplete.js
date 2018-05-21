@@ -26,8 +26,8 @@ class Autocomplete extends Component {
           highlightedIndex,
           selectedItem,
         }) => (
-            <div>
-              <label {...getLabelProps()}>Select a vote</label>
+            <fieldset>
+              <legend {...getLabelProps()}>Select a vote</legend>
               <input {...getInputProps()} />
               {isOpen ? (
                 <div>
@@ -54,7 +54,7 @@ class Autocomplete extends Component {
                     ))}
                 </div>
               ) : null}
-            </div>
+            </fieldset>
           )}
       />
     );

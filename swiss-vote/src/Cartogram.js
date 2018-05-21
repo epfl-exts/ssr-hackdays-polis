@@ -10,13 +10,14 @@ class Cartogram extends Component {
     this.height = this.props.height;
     this.width = this.props.width;
     this.colors = this.props.colors;
+    this.offsetTop = this.props.offsetTop;
   }
 
   componentDidMount() {
     this.draw(this.selection);
   }
 
-  componentWillReceiveProps({ display, selection, height }) {
+  componentWillReceiveProps({ display, selection, height, offsetTop }) {
     if (this.display !== display) {
       this.display = display;
     }
@@ -25,6 +26,9 @@ class Cartogram extends Component {
     }
     if (this.height !== height) {
       this.height = height;
+    }
+    if (this.offsetTop !== offsetTop) {
+      this.offsetTop = offsetTop;
     }
   }
 
@@ -106,6 +110,7 @@ class Cartogram extends Component {
     const results = selection ? selection.results : null;
 
     ctx.clearRect(0, 0, this.width, this.height);
+    ctx.translate(0, - this.offsetTop);
 
     for (let i = 0; i < shapes.length; i++) {
       const canton = shapes[i].canton; // get the canton code from the shapes array
@@ -129,6 +134,8 @@ class Cartogram extends Component {
           drawPath(specs);
       }
     }
+    
+    ctx.translate(0, this.offsetTop);
   }
 
   render() {

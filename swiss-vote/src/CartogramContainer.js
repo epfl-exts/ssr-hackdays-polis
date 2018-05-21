@@ -14,8 +14,9 @@ class CartogramContainer extends Component {
     }
 
     render() {
-        const cartogramHeight = 675;
         const cartogramWidth = 840;
+        const cartogramHeight = 675;
+        const mapHeight = 538;
 
         return (
             <React.Fragment>
@@ -47,9 +48,10 @@ class CartogramContainer extends Component {
                             <Cartogram
                                 display={appState.display}
                                 selection={appState.selection}
-                                height={cartogramHeight}
+                                height={appState.display === 'map' ? mapHeight : cartogramHeight}
                                 width={cartogramWidth}
                                 colors={appState.colors}
+                                offsetTop={appState.display === 'map' ? ((cartogramHeight - mapHeight)/2) : null}
                             />
                         )}
                     </Consumer>

@@ -16,7 +16,7 @@ class Cartogram extends Component {
         ctx.font = '16px Helvetica';
         ctx.fillText('Strong yes', 0, 26);
         ctx.textAlign = 'right';
-        ctx.fillText('Strong no', 840, 26);
+        ctx.fillText('Strong no', this.width, 26);
         
         gradient.addColorStop(0, this.colors.green);
         gradient.addColorStop(.25, this.colors.white);
