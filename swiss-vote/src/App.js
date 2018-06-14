@@ -29,6 +29,7 @@ class App extends Component {
     const selection = this.state.selection;
     return (
       <React.Fragment>
+        <div className="grain"></div>
         <Autocomplete
           onSelectorChange={this.handleSelectorChange}
           data={votingData}
