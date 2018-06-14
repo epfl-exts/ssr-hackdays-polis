@@ -27,7 +27,7 @@ class Autocomplete extends Component {
           selectedItem,
         }) => (
             <fieldset>
-              <legend {...getLabelProps()}>Select a vote</legend>
+              <legend {...getLabelProps()}>Select a vote from the list below.</legend>
               <input {...getInputProps()} />
               {isOpen ? (
                 <div>
@@ -40,12 +40,17 @@ class Autocomplete extends Component {
                           index,
                           item,
                           style: {
+                            color: highlightedIndex === index
+                              ? '#fbfbfb' // off-white
+                              : '#0b3536', // dark-grey
                             backgroundColor: highlightedIndex === index
-                              ? 'lightgray'
-                              : 'white',
+                              ? '#0098d8' // power-blue
+                              : '#fbfbfb', // off-white
                             fontWeight: selectedItem === item
                               ? 'bold'
                               : 'normal',
+                            maxWidth: '570px', // line-it-up with the text above
+                            padding: '5px 15px'
                           },
                         })}
                       >

@@ -37,9 +37,6 @@ class App extends Component {
           <Provider value={selection}>
             <Map selection={selection ? selection.results : null} />
           </Provider>
-          <figcaption>
-            {selection ? selection.vote : "Map of Switzerland"}
-          </figcaption>
         </figure>
       </React.Fragment>
     );

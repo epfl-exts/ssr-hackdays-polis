@@ -1,46 +1,28 @@
-.cartogram-container {
-  padding: 7.5%;
-  position: relative; }
-  .cartogram-container canvas {
-    width: 100%; }
-  .cartogram-container figure {
-    margin: 0 0 35px; }
-    .cartogram-container figure:last-of-type {
-      margin-bottom: 0; }
-  .cartogram-container h4 {
-    color: #0b3536;
-    text-align: center; }
+legend {
+  font-weight: 600;
+  margin: 18px 0 8px;
+}
+
+input {
+  border: dashed 1px var(--gold);
+  box-sizing: border-box;
+  max-width: 412.5px;
+  padding: calc(var(--content-padding) / 2);
+  width: 100%;
+  text-overflow: ellipsis;
+}
+
+figure {
+  padding: var(--content-padding) 0;
+  margin: 0;
+}
+
+figure canvas {
+  width: 100%;
+}
 
 fieldset {
-  border: none; }
-
-legend {
-  font-weight: bold;
-  margin: 0;
-  padding: 0; }
-
-.option-group label {
-  margin: 1em 0; }
-
-.option-group input {
-  margin: 1em; }
-
-.filter {
-  background: #2677bb;
-  margin-bottom: 20px; }
-
-.is-open .Select-placeholder {
-  color: transparent; }
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
+  border: none;
   padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0; }
-
-canvas {
-  width: 100%; }
+  margin: 0;
+}

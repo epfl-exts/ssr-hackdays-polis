@@ -17,7 +17,7 @@ class Map extends Component {
 
   render() {
     return (
-      <canvas ref="canvas" width={840} height={675}>
+      <canvas ref="canvas" width={840} height={538}>
         <Table />
       </canvas>
     );

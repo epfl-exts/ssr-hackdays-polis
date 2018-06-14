@@ -33,6 +33,7 @@ function getSpecs(shape, result) {
 }
 
 function drawCanvas(ctx, results) {
+  ctx.translate(0, - 68.5); // toDo: crop the SVG so that this isn't necessary
   shapes.forEach(shape => {
     // loop it by shape because there isn't always data for each canton
     const canton = shape.canton; // get the canton code from the shapes array
@@ -43,6 +44,7 @@ function drawCanvas(ctx, results) {
 
     drawPath(ctx, specifications);
   });
+  ctx.translate(0, 68.5); // toDo: crop the SVG so that this isn't necessary
 }
 
 export { drawCanvas };
