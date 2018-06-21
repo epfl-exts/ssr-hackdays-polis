@@ -69,10 +69,6 @@ a:hover {
   position: relative;
 }
 
-#root {
-  position: relative;
-}
-
 .object-link:after {
   content: "";
   position: absolute;

@@ -1,10 +1,10 @@
-legend {
-  font-weight: 600;
+label {
+  display: block;
   margin: 18px 0 8px;
 }
 
 input {
-  border: dashed 1px var(--gold);
+  border: dashed 2px var(--gold);
   box-sizing: border-box;
   max-width: 412.5px;
   padding: calc(var(--content-padding) / 2);
@@ -25,4 +25,13 @@ fieldset {
   border: none;
   padding: 0;
   margin: 0;
+}
+
+fieldset ul {
+  list-style: none;
+  padding: 0;
+}
+
+#root {
+  position: relative;
 }

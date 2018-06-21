@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Table from "./Table";
-import { drawCanvas } from "./helpers";
+import { drawCanvas } from "../helpers";
 
 let ctx = null;
 

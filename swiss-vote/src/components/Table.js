@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Consumer } from "./context-app";
+import { Consumer } from "../context-app";
 
 class Table extends Component {
   render() {
