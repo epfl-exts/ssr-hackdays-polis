@@ -22,10 +22,17 @@
   --footer-z-index: -1;
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
   font-family: "Helvetica Neue", Helvetica, sans-serif;
   font-size: 18px;
   line-height: 1.2;
+  /* sticky footer */
+  display: flex;
+  flex-direction: column;
 }
 
 a {
@@ -49,6 +56,7 @@ a:hover {
 }
 
 .footer-container {
+  flex-shrink: 0;
   background-color: var(--grey);
   padding-bottom: 30px;
 }
@@ -79,6 +87,7 @@ a:hover {
 }
 
 .content-container {
+  flex: 1 0 auto;
   box-sizing: border-box;
   margin: 0 auto;
   max-width: calc(var(--content-max-width) + var(--content-padding) * 2);

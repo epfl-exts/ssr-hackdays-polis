@@ -1,4 +1,4 @@
-import shapes from "./shapes";
+import paths from "./map-paths"; // contains the paths for drawing the map
 
 function drawPath(ctx, { d, fill }) {
   const path = new Path2D(d);
@@ -7,10 +7,10 @@ function drawPath(ctx, { d, fill }) {
   ctx.stroke(path);
 }
 
-function getSpecs(shape, result) {
+function getSpecs(path, result) {
   const specifications = {
-    d: shape.path, // svg path data
-    fill: shape.fill, // shades of grey for default
+    d: path.path, // svg path data
+    fill: path.fill, // shades of grey for default
     alpha: 1, // default
     yes: null,
     no: null
@@ -34,11 +34,11 @@ function getSpecs(shape, result) {
 
 function drawCanvas(ctx, results) {
   ctx.translate(0, - 68.5); // toDo: crop the SVG so that this isn't necessary
-  shapes.forEach(shape => {
-    // loop it by shape because there isn't always data for each canton
-    const canton = shape.canton; // get the canton code from the shapes array
+  paths.forEach(path => {
+    // loop it by path because there isn't always data for each canton
+    const canton = path.canton; // get the canton code from the paths array
     const result = results ? results.find(x => x.canton === canton) : null; // get the results that correspond to the canton code
-    const specifications = getSpecs(shape, result); // { path, fill, alpha, yes, no }
+    const specifications = getSpecs(path, result); // { path, fill, alpha, yes, no }
 
     ctx.globalAlpha = specifications.alpha; // reset the alpha value
 

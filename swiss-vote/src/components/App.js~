@@ -2,6 +2,7 @@ import React, { Component } from "react";
 
 import "../css/App.css";
 
+import { Provider } from "../context-app";
 import Autocomplete from "./Autocomplete";
 import Map from "./Map";
 
@@ -43,6 +44,7 @@ class App extends Component {
   };
 
   render() {
+    const selection = this.state.selection;
     return (
       <React.Fragment>
         <div className="grain" />
@@ -51,7 +53,9 @@ class App extends Component {
           voteResults={this.state.voteResults}
         />
         <figure>
-          <Map {...this.state.selection} />
+          <Provider value={selection}>
+            <Map selection={selection ? selection.results : null} />
+          </Provider>
         </figure>
       </React.Fragment>
     );
