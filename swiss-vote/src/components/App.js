@@ -3,57 +3,49 @@ import React, { Component } from "react";
 import "../css/App.css";
 
 import Autocomplete from "./Autocomplete";
-import Map from "./Map";
+import { Map } from "./Map";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      error: null,
-      isLoaded: false,
-      selection: null,
-      voteResults: []
-    };
-  }
+  state = {
+    selection: "",
+    allResults: []
+  };
 
   componentDidMount() {
     fetch(
-      "https://gist.githubusercontent.com/spiritual-machine/bb75db17a9febb5a9a3571e6e3cfcf30/raw/41d1297884e6ab0cc8fe56c396bdfafc56a35d74/swiss-vote-results.json"
+      "https://gist.githubusercontent.com/epfl-exts-react/63181e2beb4f813d9988734e93026b0c/raw/e9c7ef1cea83434f867b69fe8cc73ccdc02ff667/swiss-vote-results-sample.json"
     )
-      .then(res => res.json())
-      .then(
-        result => {
-          this.setState({
-            isLoaded: true,
-            voteResults: result
-          });
-        },
-        error => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
-        }
-      );
+      .then(function(response) {
+        return response.json();
+      })
+      .then(responseJSON => this.setState({ allResults: responseJSON }))
+      .catch(error => console.error("FetchError:", error));
   }
 
-  handleSelectorChange = selection => {
-    this.setState({ selection });
+  handleChange = event => {
+    this.setState({ selection: event.target.value });
   };
 
   render() {
     return (
-      <React.Fragment>
-        <div className="grain" />
-        <Autocomplete
-          onSelectorChange={this.handleSelectorChange}
-          voteResults={this.state.voteResults}
-        />
+      <div>
+        {/* <div className="grain" /> */}
+        <select
+          ref={selector => (this.selector = selector)}
+          onChange={this.handleChange}
+          value={this.state.selection}
+        >
+          <option />
+          {this.state.allResults.map((resultSet, i) => (
+            <option key={i} value={i}>
+              {resultSet.description.en}
+            </option>
+          ))}
+        </select>
         <figure>
-          <Map {...this.state.selection} />
+          <Map {...this.state.allResults[this.state.selection]} />
         </figure>
-      </React.Fragment>
+      </div>
     );
   }
 }

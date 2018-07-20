@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { drawCanvas } from "../helpers";
 
-function FallbackTable(props) {
+function ResultsTable(props) {
   return (
     <table>
       <caption>{props.vote}</caption>
@@ -13,40 +13,112 @@ function FallbackTable(props) {
         </tr>
       </thead>
       <tbody>
-        {props.results && props.results.map(result => {
-          return (
-            <tr key={result.canton}>
-              <td>{result.canton}</td>
-              <td>{result.yes}</td>
-              <td>{result.no}</td>
-            </tr>
-          );
-        })}
+        {props.results &&
+          props.results.map(result => {
+            return (
+              <tr key={result.canton}>
+                <td>{result.canton}</td>
+                <td>{result.yes}</td>
+                <td>{result.no}</td>
+              </tr>
+            );
+          })}
       </tbody>
     </table>
   );
 }
 
-let ctx = null;
+// function Map(props) {
+//   const canvas = React.createElement(
+//     "canvas",
+//     { height: 538, width: 840 },
+//     React.createElement(ResultsTable, {
+//       description: props.description,
+//       results: props.results
+//     })
+//   );
+
+//   return canvas;
+// }
+
+// function Map(props) {
+//   const canvas = React.createElement(
+//     "canvas",
+//     { height: 538, width: 840 },
+//     <ResultsTable description={props.description} results={props.results} />
+//   );
+
+//   return canvas;
+// }
 
 class Map extends Component {
   componentDidMount() {
-    ctx = this.refs.canvas.getContext("2d"); // Defines the canvas context: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
-    drawCanvas(ctx, this.props.results); // This helper function receives the canvas context, as well as the results, and uses these to draw the result map
+    this.ctx = this.refs.canvas.getContext("2d"); // Defines the canvas context: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
+    drawCanvas(this.ctx, this.props.results); // This helper function receives the canvas context, as well as the results, and uses these to draw the result map
   }
 
   componentDidUpdate() {
-    ctx.clearRect(0, 0, ctx.width, ctx.height); // Clears the previously drawn map from the canvas
-    drawCanvas(ctx, this.props.results);
+    this.ctx.clearRect(0, 0, this.ctx.width, this.ctx.height); // Clears the previously drawn map from the canvas
+    drawCanvas(this.ctx, this.props.results);
   }
 
   render() {
-    return (
-      <canvas ref="canvas" width={840} height={538}>
-        <FallbackTable description={this.props.description} results={this.props.results} />
-      </canvas>
+    const canvas = React.createElement(
+      "canvas",
+      { height: 538, width: 840, ref: "canvas" },
+      React.createElement(ResultsTable, {
+        description: this.props.description,
+        results: this.props.results
+      })
     );
+
+    return canvas;
   }
 }
 
-export default Map;
+// class Map extends Component {
+//   componentDidMount() {
+//     this.ctx = this.refs.canvas.getContext("2d");
+//     drawCanvas(this.ctx, this.props.results);
+//   }
+
+//   componentDidUpdate() {
+//     this.ctx.clearRect(0, 0, this.ctx.width, this.ctx.height);
+//     drawCanvas(this.ctx, this.props.results);
+//   }
+
+//   render() {
+//     const canvas = React.createElement(
+//       "canvas",
+//       { height: 538, width: 840, ref: "canvas" },
+//       <ResultsTable description={this.props.description} results={this.props.results} />
+//     );
+
+//     return canvas;
+//   }
+// }
+
+// class Map extends Component {
+//   componentDidMount() {
+//     this.ctx = this.refs.canvas.getContext("2d");
+//     drawCanvas(this.ctx, this.props.results);
+//   }
+
+//   componentDidUpdate() {
+//     this.ctx.clearRect(0, 0, this.ctx.width, this.ctx.height);
+//     drawCanvas(this.ctx, this.props.results);
+//   }
+
+//   render() {
+//     return (
+//       <canvas height={538} width={840} ref="canvas">
+//         <ResultsTable
+//           description={this.props.description}
+//           results={this.props.results}
+//         />
+//       </canvas>
+//     );
+//   }
+// }
+
+export { Map, ResultsTable };

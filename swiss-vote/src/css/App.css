@@ -3,7 +3,7 @@ label {
   margin: 18px 0 8px;
 }
 
-input {
+input, select {
   border: dashed 2px var(--gold);
   box-sizing: border-box;
   max-width: 412.5px;
