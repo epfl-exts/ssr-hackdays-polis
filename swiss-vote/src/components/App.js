@@ -29,7 +29,6 @@ class App extends Component {
   render() {
     return (
       <div>
-        {/* <div className="grain" /> */}
         <select
           ref={selector => (this.selector = selector)}
           onChange={this.handleChange}
